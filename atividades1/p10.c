@@ -14,27 +14,41 @@ int main(){
 
 
     // versão convertendo de int para double
-    // int dl;
-    // double valor_aluguel, qtd_fitas, lucro_bruto;
-    // scanf("%d", &dl);
-    // scanf("%lf", &valor_aluguel);
+    int qtd_fitas, b;
+    double valor_aluguel, lucro_bruto, fitas_estrgadas, faturamento, valor_multas, reposicao, 
+    fitas_devolvidas, valor_ganho_multas, a, alguma_coisa;
+    scanf("%d", &qtd_fitas);
+    scanf("%lf", &valor_aluguel);
 
-    // qtd_fitas = (double)dl;
-    // lucro_bruto = qtd_fitas * valor_aluguel;
+
+    // qtd_fitas = (double)dl; ignorar
+
+    faturamento = qtd_fitas/3 * valor_aluguel;
+    lucro_bruto = qtd_fitas * valor_aluguel;
+    valor_multas = valor_aluguel * 0.1;
+    fitas_devolvidas = (qtd_fitas/3)/10;
+    valor_ganho_multas = valor_multas *  fitas_devolvidas;
+    
+    reposicao = (qtd_fitas*2/100)/10;
+    alguma_coisa = qtd_fitas - (qtd_fitas*2/100);
+    b = alguma_coisa + reposicao;
+    
+
+    printf("%.6lf\n", faturamento); // certo
+    printf("%.6lf\n", valor_ganho_multas); // certo3
+    // printf("%.lf", (qtd_fitas - (qtd_fitas*0.02) + (qtd_fitas*0.02)/10)); // certo2
+    printf("%d",  b); // certo2
+
+    return 0;
+
+    // versão com tudo double
+    // double valor_aluguel, qtd_fitas;
+    // scanf("%lf", &qtd_fitas);
+    // scanf("%lf", &valor_aluguel);
 
     // printf("%.6lf\n", qtd_fitas/3.0 * valor_aluguel); // certo
     // printf("%.6lf\n", (valor_aluguel * 0.1) * ((qtd_fitas/3)/10)); // certo3
     // printf("%.lf", (qtd_fitas - (qtd_fitas*0.02) + (qtd_fitas*0.02)/10)); // certo2
     // return 0;
-
-    // versão com tudo double
-    double valor_aluguel, qtd_fitas;
-    scanf("%lf", &qtd_fitas);
-    scanf("%lf", &valor_aluguel);
-
-    printf("%.6lf\n", qtd_fitas/3.0 * valor_aluguel); // certo
-    printf("%.6lf\n", (valor_aluguel * 0.1) * ((qtd_fitas/3)/10)); // certo3
-    printf("%.lf", (qtd_fitas - (qtd_fitas*0.02) + (qtd_fitas*0.02)/10)); // certo2
-    return 0;
     
 }
