@@ -1,4 +1,4 @@
-#include <stdio.h>
+// Autor: Lucas Frade Ferreira Moscardo
 
 int main(){
     double a;

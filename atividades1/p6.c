@@ -1,3 +1,6 @@
+// Autor: Lucas Frade Ferreira Moscardo
+
+
 #include <stdio.h>
 
 int main(){

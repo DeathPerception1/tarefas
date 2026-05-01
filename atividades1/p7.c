@@ -1,3 +1,5 @@
+// Autor: Lucas Frade Ferreira Moscardo
+
 #include <stdio.h>
 #include <math.h>
 
