@@ -43,6 +43,7 @@ int main(){
     }
     // ok, parte dois da atividade
     double porcentagem_vitoria = 0, porcentagem_derrota = 0, porcentagem_empate = 0, porcentagem_lidas = 0, a = 0, b = 0, c = 0, d = 0;
+    
     a = ((double)partidas_lidas/total_jogos);
     porcentagem_lidas = a * 100;
     b = ((double)vitorias/partidas_lidas);
@@ -66,6 +67,8 @@ int main(){
     if(gols_enfiados_global > 0) {
         printf("%d\n", maior_qtd_gols_enfiados);
     } else printf("Nao houve vitorias.\n");    
+
+
 
     return 0;
 }
