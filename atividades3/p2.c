@@ -3,36 +3,37 @@
 #include<stdio.h>
 
 int main(){
+    int tamanho, i, t = 0;
+    scanf("%d", &tamanho);
+    int vetor[tamanho];
 
-
-    int n, a, i, t_vetor = 0;
-    scanf("%d", &n);
-    int vetor[n];
-
-    for(i=0 ; i < n ; i++){
-        scanf("%d", &a);
-        vetor[i] = a;
+    for(i=0 ; i < tamanho ; i++){
+        scanf("%d", &vetor[i]);
     }
+    // printf("%d tamanho\n", tamanho);
     
-    int k, repete, apareceu;
+    int k;
     // usar dois loops. Um para percorrer a primeira posição do vetor
     // O segundo seria percorrer dnv o vetor, no entanto, contando quantas vezes o index i se repete 
-    for(i = 0; i < n ; i++){
+    for(i = 0; i < tamanho ; i++){
+        int apareceu = 0;
         for(k = 0; k < i; k++){
             if(vetor[i] == vetor[k]){
-                apareceu = 1;
+                apareceu = 1;          
+                // printf("primeiro print %d", apareceu); 
                 break;
             }
         }
             if(!apareceu){
-                repete = 0;
-                for(k = 0; k < n; k++){
+                int repete = 0;
+                for(k = 0; k < tamanho; k++){
                     if(vetor[i] == vetor[k]){
                         repete++;
                     }
                 }
-            printf("%d %d\n", vetor[i], repete);
+                printf("%d %d\n", vetor[i], repete);
             }
         }
         return 0;
     }
+
