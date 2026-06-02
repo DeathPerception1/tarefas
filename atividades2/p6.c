@@ -2,73 +2,105 @@
 
 #include <stdio.h>
 
-int main(){
 
-    // vou separar a atividade em duas. Essa é a primeira, a parte lógica bruta
-    // vou iterar sobre total_jogos
-    int total_jogos = 0, i = 0, partidas_lidas = 0, gols_enfiados = 0, gols_enfiados_global = 0, gols_recebidos = 0, gols_recebidos_global = 0,
-    maior_qtd_gols_enfiados = 0, maior_qtd_gols_recebidos = 0;
-    // int vitorias = 0; 
-    // int derrotas = 0;
-    // int empates = 0; 
-    int vitorias = 0, derrotas = 0, empates = 0;
-    // Depois, para um número indeterminado de partidas a serem analisadas menor ou igual ao número 
-    // total de partidas dado, leia o resultado da partida, isto é, o número de gols feitos e o 
-    // número de gols tomados.
-    
-    scanf("%d", &total_jogos);
+int main() {
 
-    // O maior nu´mero de gols tomados em uma derrota nas partidas analisadas. Se n˜ao
-    // houver derrotas, imprima a frase “Nao houve derrotas.” sem acento e sem as aspas.
-    // – O maior nu´mero de gols feitos em uma vit´oria nas partidas analisadas. Se n˜ao
-    // houver vit´orias, imprima a frase “Nao houve vitorias.” sem acento e sem as aspas.
+    // DEFINIÇÃO DE STRUCTS
+    struct Estatisticas {
+    double porcentagemAnalisada;
+    double prct_v;
+    double prct_e;
+    double prct_d;
+    int gols_enfiados;
+    int maior_n_gols_enfiados;
+    int maior_n_gols_recebidos_D;
 
-    for(i=1; i <= total_jogos; i++){
-        scanf("%d", &gols_enfiados);
-        if (gols_enfiados == -1) break;
-        scanf("%d", &gols_recebidos);
-        if (gols_recebidos == -1) break;
+    };
 
-        partidas_lidas += 1;
-        gols_enfiados_global += gols_enfiados;
-        gols_recebidos_global += gols_recebidos;
+    struct Estatisticas gerarEstatisticas(int t_solicitado, int t_lido, int matriz[][2]) {
+    struct Estatisticas est;
+    double v = 0, emp = 0, d = 0;
+    int soma_enfiados = 0, soma_recebidos = 0;
+    est.maior_n_gols_enfiados = -1;
+    est.maior_n_gols_recebidos_D = -1;
 
-        if(gols_enfiados > gols_recebidos){ // vitoria
-            vitorias += 1;
-            if(gols_enfiados > maior_qtd_gols_enfiados) { maior_qtd_gols_enfiados = gols_enfiados; }
-        } else if (gols_enfiados < gols_recebidos){ // derrota
-            derrotas+=1;
-            if(gols_recebidos > maior_qtd_gols_recebidos) { maior_qtd_gols_recebidos = gols_recebidos; }
-        } else { empates+= 1; } // suponha
+    for (int i = 0; i < t_lido; i++) {
+        int enfiados = matriz[i][0];
+        int recebidos = matriz[i][1];
+
+        soma_enfiados += enfiados;
+        soma_recebidos += recebidos;
+
+        if (enfiados > recebidos) { // ganhou
+            v++;
+            if (enfiados > est.maior_n_gols_enfiados) {
+                est.maior_n_gols_enfiados = enfiados;
+            }
+        } else if (enfiados < recebidos) { // Derrota
+            d++;
+            if (recebidos > est.maior_n_gols_recebidos_D) {
+                est.maior_n_gols_recebidos_D = recebidos;
+            }
+        } else { // Empate
+            emp++;
+        }
     }
-    // ok, parte dois da atividade
-    double porcentagem_vitoria = 0, porcentagem_derrota = 0, porcentagem_empate = 0, porcentagem_lidas = 0, a = 0, b = 0, c = 0, d = 0;
-    
-    a = ((double)partidas_lidas/total_jogos);
-    porcentagem_lidas = a * 100;
-    b = ((double)vitorias/partidas_lidas);
-    porcentagem_vitoria =  b * 100;
-    c = ((double)derrotas/partidas_lidas);    
-    porcentagem_derrota = c * 100;
-    d = ((double)empates/partidas_lidas);
-    porcentagem_empate = d * 100;
-    
-    int saldo_gols = 0;
-    saldo_gols = gols_enfiados_global - gols_recebidos_global;
 
-    printf("%lf\n", porcentagem_lidas);
-    printf("%lf\n", porcentagem_vitoria);
-    printf("%lf\n", porcentagem_empate);
-    printf("%lf\n", porcentagem_derrota);
-    printf("%d\n", saldo_gols);
-    if(gols_recebidos_global < 0){ // não me pergunte o pq, mas inverter o sinal de igual destes if faz eles funcionarem. Denovo, ñ me pergunte
-        printf("%d\n", maior_qtd_gols_recebidos);
-    } else printf("Nao houve derrotas.\n");
-    if(gols_enfiados_global > 0) {
-        printf("%d\n", maior_qtd_gols_enfiados);
-    } else printf("Nao houve vitorias.\n");    
+    // Calcula e registra as porcentagens
+    est.porcentagemAnalisada = ((double)t_lido / t_solicitado) * 100;
+    if (t_lido > 0) {
+        est.prct_v = ((double)v / t_lido) * 100;
+        est.prct_e = ((double)emp / t_lido) * 100;
+        est.prct_d = ((double)d / t_lido) * 100;
+    } else {
+        est.prct_v = est.prct_e = est.prct_d = 0;
+    }
 
+    est.gols_enfiados = soma_enfiados - soma_recebidos;   
+    return est;
+    }
 
+    int totalPartidas;
+    scanf("%d", &totalPartidas);
+
+    int partidas[totalPartidas][2];
+    int partidasRegistradas = 0;
+
+    for(int i = 0; i < totalPartidas; i++){
+        int golsFeitos, golsTomados;
+        scanf("%d", &golsFeitos);
+        if (golsFeitos == -1){
+            break;
+        } 
+
+        scanf("%d", &golsTomados);
+
+        partidas[i][0] = golsFeitos;
+        partidas[i][1] = golsTomados;
+        partidasRegistradas++;
+    }
+
+    // Struct pra armazenar as estatisicas 
+    struct Estatisticas res = gerarEstatisticas(totalPartidas, partidasRegistradas, partidas);
+
+    // Impressão dos resultados conforme a ordem solicitada
+    printf("%lf\n", res.porcentagemAnalisada);
+    printf("%lf\n", res.prct_v);
+    printf("%lf\n", res.prct_e);
+    printf("%lf\n", res.prct_d);
+    printf("%d\n", res.gols_enfiados);
+
+    if (res.maior_n_gols_recebidos_D == -1) {
+        printf("Nao houve derrotas.\n");
+    } else {
+        printf("%d\n", res.maior_n_gols_recebidos_D);
+    }
+
+    if (res.maior_n_gols_enfiados == -1) {
+        printf("Nao houve vitorias.\n");
+    } else {
+        printf("%d\n", res.maior_n_gols_enfiados);
+    }
 
     return 0;
 }
